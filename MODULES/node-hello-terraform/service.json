@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Node-app",
+    "image": "node",
+    "cpu": 256,
+    "memory": 512,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 8000,
+        "hostPort": 8000
+      }
+    ]
+  },
+  {
+    "name": "webserver",
+    "image": "nginx",
+    "cpu": 256,
+    "memory": 256,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 443,
+        "hostPort": 443
+      }
+    ]
+  }
+]

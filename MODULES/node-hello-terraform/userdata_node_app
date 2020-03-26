@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo yum install update -y
+## JOINS INSTANCE TO ECS CLUSTER
+echo ECS_CLUSTER=node-app >> /etc/ecs/ecs.config
+
