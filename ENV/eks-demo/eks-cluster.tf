@@ -19,12 +19,12 @@ POLICY
 
 resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = "aws_iam_role.demo-master-node.name"
+  role       = aws_iam_role.demo-master-node.name
 }
 
 resource "aws_iam_role_policy_attachment" "demo-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = "aws_iam_role.demo-master-node.name"
+  role       = aws_iam_role.demo-master-node.name
 }
 
 ##Security Group for Master Node
