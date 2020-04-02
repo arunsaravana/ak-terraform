@@ -38,12 +38,43 @@ resource "aws_iam_role_policy_attachment" "demo-node-AmazonEC2ContainerRegistryR
   role       = aws_iam_role.demo-worker-node.name
 }
 
+resource "aws_security_group" "demo-worker" {
+  name        = "${var.cluster-name}-worker-sg"
+  description = "Cluster communication with worker nodes"
+  vpc_id      = aws_vpc.demo.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.cluster-name}-worker-sg"
+  }
+}
+
 resource "aws_eks_node_group" "demo" {
   cluster_name    = aws_eks_cluster.demo.name
   node_group_name = var.nodegroup
   node_role_arn   = aws_iam_role.demo-worker-node.arn
   subnet_ids      = aws_subnet.demo[*].id
+  instance_types  = var.ng-instacetypes
+ 	dynamic "remote_access" {
+ 		for_each = var.key != null && var.key != "" ? ["true"] : []
+	content {
+		  ec2_ssh_key	  = var.key
+		source_security_group_ids = [aws_security_group.demo-worker.id]
+		}
 
+}
   scaling_config {
     desired_size = 1
     max_size     = 5

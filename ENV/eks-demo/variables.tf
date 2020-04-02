@@ -18,7 +18,19 @@ variable "vpc-cidr" {
   default="10.0.0.0/16"
 }
 
+variable "newbits" {
+  default= "8"
+}
 
 variable "subnet-count" {
   default= 2
+}
+
+variable "ng-instacetypes" {
+#	type = "list"
+  default= ["t2.micro"]
+}
+
+variable "key" {
+  default= "sample"
 }
